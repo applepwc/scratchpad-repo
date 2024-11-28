@@ -6,8 +6,8 @@ This is a simple web application that provides a scratchpad for users to edit an
 
 1. Clone the repository:
     ```
-    git clone https://github.com/githubnext/workspace-blank.git
-    cd workspace-blank
+    git clone https://github.com/applepwc/scratchpad-repo.git
+    cd scratchpad-repo
     ```
 
 2. Install the required dependencies:
@@ -15,10 +15,10 @@ This is a simple web application that provides a scratchpad for users to edit an
     pip install -r requirements.txt
     ```
 
-3. Create a `templates` directory and move the `index.html` file into it:
+3. Create a `static` directory and add the `script.js` file:
     ```
-    mkdir templates
-    mv index.html templates/
+    mkdir static
+    mv script.js static/
     ```
 
 4. Run the Flask application:
