@@ -15,12 +15,18 @@ This is a simple web application that provides a scratchpad for users to edit an
     pip install -r requirements.txt
     ```
 
-3. Run the Flask application:
+3. Create a `templates` directory and move the `index.html` file into it:
+    ```
+    mkdir templates
+    mv index.html templates/
+    ```
+
+4. Run the Flask application:
     ```
     python app.py
     ```
 
-4. Open your web browser and navigate to `http://127.0.0.1:5000/` to access the scratchpad.
+5. Open your web browser and navigate to `http://127.0.0.1:5000/` to access the scratchpad.
 
 ## How to Use the Scratchpad
 
