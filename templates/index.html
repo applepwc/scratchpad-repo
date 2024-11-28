@@ -4,11 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scratchpad</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
-    <textarea id="scratchpad" rows="20" cols="100"></textarea>
-    <br>
-    <button id="saveButton">Save</button>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <textarea id="scratchpad" class="form-control" rows="20"></textarea>
+                <br>
+                <button id="saveButton" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+            </div>
+        </div>
+    </div>
     <script src="static/script.js"></script>
 </body>
 </html>
