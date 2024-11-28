@@ -4,7 +4,12 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    try:
+        with open('scratchpad.txt', 'r') as file:
+            content = file.read()
+    except FileNotFoundError:
+        content = ""
+    return render_template('index.html', content=content)
 
 @app.route('/save', methods=['POST'])
 def save():
