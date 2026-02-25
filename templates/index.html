@@ -13,21 +13,33 @@
           integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
           crossorigin="anonymous"
           referrerpolicy="no-referrer">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-12">
-                <textarea id="scratchpad" class="form-control" rows="20">{{ content }}</textarea>
-                <input type="hidden" id="csrf_token" value="{{ csrf_token() }}">
-                <br>
-                <button id="saveButton" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
-                <span id="saveStatus" class="ml-2"></span>
-            </div>
+    <header class="sp-toolbar">
+        <div class="sp-brand">
+            <i class="fas fa-edit"></i>
+            <span class="sp-brand-name">Scratchpad</span>
+            <span class="sp-dirty-dot" id="dirtyDot" hidden></span>
         </div>
-    </div>
+        <div class="sp-toolbar-actions">
+            <button id="saveButton" class="sp-save-btn">
+                <i class="fas fa-save"></i>
+                <span>Save</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="sp-editor-wrapper">
+        <input type="hidden" id="csrf_token" value="{{ csrf_token() }}">
+        <textarea id="scratchpad" class="sp-editor" spellcheck="false" placeholder="Start typing…">{{ content }}</textarea>
+    </main>
+
+    <footer class="sp-statusbar">
+        <span id="wordCount" class="sp-word-count">0 words · 0 chars</span>
+        <span id="saveStatus" class="sp-save-status"></span>
+    </footer>
+
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

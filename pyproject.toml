@@ -1,0 +1,11 @@
+[project]
+name = "scratchpad"
+version = "0.1.0"
+description = "A minimal Flask web scratchpad"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "flask>=3.1.0",
+    "flask-wtf>=1.2.0",
+    "gunicorn>=22.0.0",
+]

@@ -1,0 +1,28 @@
+# Python virtual environment
+.venv/
+
+# Git history
+.git/
+.gitignore
+
+# CI / editor metadata
+.claude/
+.github/
+.vscode/
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Runtime data file — provided by the Docker volume at runtime
+scratchpad.txt
+
+# Environment files
+.env
+.env.*
+
+# Build artefacts
+*.egg-info/
+dist/
+build/

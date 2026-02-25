@@ -1,0 +1,14 @@
+services:
+  scratchpad:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      # Replace with a long random string before deploying
+      - SECRET_KEY=change-me-to-a-long-random-string
+    volumes:
+      # Mount only the data file; avoids clobbering the installed Python packages in /app
+      - scratchpad_data:/app/scratchpad.txt
+
+volumes:
+  scratchpad_data:

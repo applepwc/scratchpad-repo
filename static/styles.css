@@ -1,38 +1,188 @@
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f8f9fa;
+:root {
+    --sp-bg:             #1e1e2e;
+    --sp-toolbar-bg:     #181825;
+    --sp-statusbar-bg:   #11111b;
+    --sp-border:         #313244;
+    --sp-text:           #cdd6f4;
+    --sp-text-muted:     #6c7086;
+    --sp-accent:         #89b4fa;
+    --sp-accent-hover:   #b4befe;
+    --sp-success:        #a6e3a1;
+    --sp-error:          #f38ba8;
+    --sp-dirty:          #f9e2af;
+    --sp-editor-font:    "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
+    --sp-ui-font:        system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --sp-toolbar-h:      52px;
+    --sp-statusbar-h:    32px;
+    --sp-radius:         4px;
+    --sp-transition:     0.2s ease;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    background: var(--sp-bg);
+    color: var(--sp-text);
+    font-family: var(--sp-ui-font);
+}
+
+/* ── Toolbar ── */
+
+.sp-toolbar {
+    flex: 0 0 var(--sp-toolbar-h);
+    display: flex;
     align-items: center;
-    height: 100vh;
+    justify-content: space-between;
+    padding: 0 16px;
+    background: var(--sp-toolbar-bg);
+    border-bottom: 1px solid var(--sp-border);
 }
 
-textarea {
-    width: 80%;
-    height: 60%;
-    padding: 10px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    font-size: 16px;
-    font-family: 'Roboto', sans-serif;
-    resize: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.sp-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--sp-accent);
+    font-weight: 600;
+    font-size: 15px;
 }
 
-button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
+.sp-brand-name {
+    color: var(--sp-text);
+}
+
+.sp-dirty-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sp-dirty);
+    display: inline-block;
+    animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.35; }
+}
+
+.sp-save-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: var(--sp-accent);
+    color: var(--sp-statusbar-bg);
     border: none;
-    border-radius: 4px;
-    font-size: 16px;
+    border-radius: var(--sp-radius);
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background var(--sp-transition);
 }
 
-button:hover {
-    background-color: #0056b3;
+.sp-save-btn:hover:not(:disabled) {
+    background: var(--sp-accent-hover);
+}
+
+.sp-save-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* ── Editor ── */
+
+.sp-editor-wrapper {
+    flex: 1 1 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.sp-editor {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    padding: 16px 20px;
+    background: var(--sp-bg);
+    color: var(--sp-text);
+    font-family: var(--sp-editor-font);
+    font-size: 14px;
+    line-height: 1.7;
+    border: none;
+    outline: none;
+    resize: none;
+    caret-color: var(--sp-accent);
+}
+
+.sp-editor::placeholder {
+    color: var(--sp-text-muted);
+}
+
+/* ── Statusbar ── */
+
+.sp-statusbar {
+    flex: 0 0 var(--sp-statusbar-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    background: var(--sp-statusbar-bg);
+    border-top: 1px solid var(--sp-border);
+    font-size: 12px;
+    color: var(--sp-text-muted);
+}
+
+.sp-word-count {
+    font-family: var(--sp-editor-font);
+}
+
+/* ── Save status states ── */
+
+.sp-save-status {
+    font-size: 12px;
+    transition: opacity var(--sp-transition);
+}
+
+.sp-save-status.status-saving {
+    color: var(--sp-text-muted);
+}
+
+.sp-save-status.status-saving::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.sp-save-status.status-saved {
+    color: var(--sp-success);
+}
+
+.sp-save-status.status-error {
+    color: var(--sp-error);
+}
+
+.sp-save-status.status-fade {
+    opacity: 0;
 }
