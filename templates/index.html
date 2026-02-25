@@ -14,31 +14,33 @@
           crossorigin="anonymous"
           referrerpolicy="no-referrer">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/interactjs@1.10/dist/interact.min.js"></script>
 </head>
 <body>
-    <header class="sp-toolbar">
-        <div class="sp-brand">
-            <i class="fas fa-edit"></i>
-            <span class="sp-brand-name">Scratchpad</span>
-            <span class="sp-dirty-dot" id="dirtyDot" hidden></span>
-        </div>
-        <div class="sp-toolbar-actions">
-            <button id="saveButton" class="sp-save-btn">
-                <i class="fas fa-save"></i>
-                <span>Save</span>
-            </button>
-        </div>
-    </header>
+    <div class="sp-app">
+        <header class="sp-toolbar">
+            <div class="sp-brand">
+                <i class="fas fa-edit"></i>
+                <span class="sp-brand-name">Scratchpad</span>
+                <span class="sp-dirty-dot" id="dirtyDot" hidden></span>
+            </div>
+            <div class="sp-toolbar-actions">
+                <button id="maximizeButton" class="sp-win-btn" title="Maximize">
+                    <i class="fas fa-window-maximize"></i>
+                </button>
+            </div>
+        </header>
 
-    <main class="sp-editor-wrapper">
-        <input type="hidden" id="csrf_token" value="{{ csrf_token() }}">
-        <textarea id="scratchpad" class="sp-editor" spellcheck="false" placeholder="Start typing…">{{ content }}</textarea>
-    </main>
+        <main class="sp-editor-wrapper">
+            <input type="hidden" id="csrf_token" value="{{ csrf_token() }}">
+            <textarea id="scratchpad" class="sp-editor" spellcheck="false" placeholder="Start typing…">{{ content }}</textarea>
+        </main>
 
-    <footer class="sp-statusbar">
-        <span id="wordCount" class="sp-word-count">0 words · 0 chars</span>
-        <span id="saveStatus" class="sp-save-status"></span>
-    </footer>
+        <footer class="sp-statusbar">
+            <span id="wordCount" class="sp-word-count">0 words · 0 chars</span>
+            <span id="saveStatus" class="sp-save-status"></span>
+        </footer>
+    </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>

@@ -1,8 +1,8 @@
 :root {
-    --sp-bg:             #1e1e2e;
-    --sp-toolbar-bg:     #181825;
-    --sp-statusbar-bg:   #11111b;
-    --sp-border:         #313244;
+    --sp-bg:             #252840;
+    --sp-toolbar-bg:     #1e2138;
+    --sp-statusbar-bg:   #191c30;
+    --sp-border:         #3d4070;
     --sp-text:           #cdd6f4;
     --sp-text-muted:     #6c7086;
     --sp-accent:         #89b4fa;
@@ -15,6 +15,7 @@
     --sp-toolbar-h:      52px;
     --sp-statusbar-h:    32px;
     --sp-radius:         4px;
+    --sp-card-radius:    12px;
     --sp-transition:     0.2s ease;
 }
 
@@ -24,17 +25,33 @@
     padding: 0;
 }
 
-html, body {
-    height: 100%;
+/* Page background only — card is position:fixed so body needs no layout */
+body {
+    height: 100vh;
+    font-family: var(--sp-ui-font);
+    color: var(--sp-text);
+    background: radial-gradient(ellipse 80% 40% at 50% 0%, #1e1a3a 0%, #0d0d14 55%);
+    background-color: #0d0d14;
     overflow: hidden;
 }
 
-body {
+/* ── Floating card window ── */
+
+.sp-app {
+    position: fixed;
+    z-index: 100;
+    /* width / height / left / top are set by JS on init */
     display: flex;
     flex-direction: column;
-    background: var(--sp-bg);
-    color: var(--sp-text);
-    font-family: var(--sp-ui-font);
+    border-radius: var(--sp-card-radius);
+    overflow: hidden;
+    border: 1px solid var(--sp-border);
+    box-shadow:
+        0 0 0 1px rgba(137, 180, 250, 0.06),
+        0 8px 24px rgba(0, 0, 0, 0.45),
+        0 32px 80px rgba(0, 0, 0, 0.55);
+    /* smooth border-radius transition on maximize/restore */
+    transition: border-radius var(--sp-transition);
 }
 
 /* ── Toolbar ── */
@@ -44,9 +61,25 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 16px;
+    padding: 0 12px 0 16px;
     background: var(--sp-toolbar-bg);
     border-bottom: 1px solid var(--sp-border);
+    /* drag handle */
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+}
+
+.sp-toolbar:active {
+    cursor: grabbing;
+}
+
+/* Buttons inside toolbar should not show grab cursor */
+.sp-toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: default;
 }
 
 .sp-brand {
@@ -76,49 +109,47 @@ body {
     50%       { opacity: 0.35; }
 }
 
-.sp-save-btn {
+/* Maximize / restore ghost button */
+.sp-win-btn {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    background: var(--sp-accent);
-    color: var(--sp-statusbar-bg);
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: transparent;
+    color: var(--sp-text-muted);
     border: none;
     border-radius: var(--sp-radius);
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 12px;
     cursor: pointer;
-    transition: background var(--sp-transition);
+    transition: color var(--sp-transition), background var(--sp-transition);
 }
 
-.sp-save-btn:hover:not(:disabled) {
-    background: var(--sp-accent-hover);
+.sp-win-btn:hover {
+    color: var(--sp-text);
+    background: rgba(255, 255, 255, 0.07);
 }
 
-.sp-save-btn:disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-}
-
-/* ── Editor ── */
+/* ── Editor — fills remaining card height ── */
 
 .sp-editor-wrapper {
-    flex: 1 1 0;
+    flex: 1;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    background: var(--sp-bg);
 }
 
 .sp-editor {
     flex: 1;
     width: 100%;
     height: 100%;
-    padding: 16px 20px;
+    padding: 20px 24px;
     background: var(--sp-bg);
     color: var(--sp-text);
     font-family: var(--sp-editor-font);
     font-size: 14px;
-    line-height: 1.7;
+    line-height: 1.75;
     border: none;
     outline: none;
     resize: none;
