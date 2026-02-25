@@ -2,7 +2,8 @@ FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
 
 ENV UV_COMPILE_BYTECODE=1 \
     UV_LINK_MODE=copy \
-    UV_PYTHON_DOWNLOADS=0
+    UV_PYTHON_DOWNLOADS=0 \
+    PATH="/app/.venv/bin:$PATH"
 
 WORKDIR /app
 
@@ -28,4 +29,4 @@ USER appuser
 
 EXPOSE 5000
 
-CMD ["uv", "run", "gunicorn", "--workers", "1", "--bind", "0.0.0.0:5000", "app:app"]
+CMD ["gunicorn", "--workers", "1", "--bind", "0.0.0.0:5000", "app:app"]
