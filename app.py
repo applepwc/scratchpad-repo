@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, jsonify
 from flask_wtf.csrf import CSRFProtect
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-SCRATCHPAD = os.path.join(BASE_DIR, 'scratchpad.txt')
+SCRATCHPAD = os.environ.get('SCRATCHPAD_PATH', os.path.join(BASE_DIR, 'scratchpad.txt'))
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', os.urandom(24))

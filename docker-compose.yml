@@ -6,9 +6,13 @@ services:
     environment:
       # Replace with a long random string before deploying
       - SECRET_KEY=change-me-to-a-long-random-string
+      # Points app.py at the persistent data directory
+      - SCRATCHPAD_PATH=/data/scratchpad.txt
     volumes:
-      # Mount only the data file; avoids clobbering the installed Python packages in /app
-      - scratchpad_data:/app/scratchpad.txt
+      # Named volume mounted to a directory — Docker can always do this reliably.
+      # os.replace() (atomic rename) inside app.py is incompatible with mounting
+      # to a file path, so we mount to /data/ and redirect via SCRATCHPAD_PATH.
+      - scratchpad_data:/data
 
 volumes:
   scratchpad_data:

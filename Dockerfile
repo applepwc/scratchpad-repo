@@ -17,11 +17,12 @@ COPY . .
 # Install the project itself
 RUN uv sync --frozen --no-dev
 
-# Create a non-root user and ensure scratchpad.txt exists for volume mounting
+# Create a non-root user; set up /data volume directory with correct ownership
 RUN groupadd -g 999 appuser && \
     useradd -r -u 999 -g appuser appuser && \
-    touch /app/scratchpad.txt && \
-    chown -R appuser:appuser /app
+    mkdir -p /data && \
+    touch /data/scratchpad.txt && \
+    chown -R appuser:appuser /app /data
 
 USER appuser
 
