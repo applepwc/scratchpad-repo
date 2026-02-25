@@ -10,9 +10,9 @@ A simple web application that provides a scratchpad for users to edit and save c
     cd scratchpad-repo
     ```
 
-2. Install dependencies:
+2. Install dependencies with [uv](https://docs.astral.sh/uv/):
     ```bash
-    pip install -r requirements.txt
+    uv sync
     ```
 
 3. Set the `SECRET_KEY` environment variable (required for CSRF protection):
@@ -23,10 +23,24 @@ A simple web application that provides a scratchpad for users to edit and save c
 
 4. Run the application:
     ```bash
-    python app.py
+    uv run flask run --debug
     ```
 
 5. Open `http://127.0.0.1:5000/` in your browser.
+
+## Docker
+
+```bash
+# Build and start
+docker compose build
+docker compose up
+
+# Open http://localhost:5000
+```
+
+`scratchpad.txt` is persisted in a named Docker volume (`scratchpad_data`) so data
+survives container restarts.  Set a proper `SECRET_KEY` in `docker-compose.yml`
+before deploying.
 
 ## Environment Variables
 
@@ -37,13 +51,12 @@ A simple web application that provides a scratchpad for users to edit and save c
 
 ## How It Works
 
-- Content is auto-saved to `scratchpad.txt` in the project root on each Save click.
+- Content is auto-saved to `scratchpad.txt` in the project root on each Save click (or Ctrl/Cmd+S).
 - The save operation is atomic: content is written to a `.tmp` file first, then swapped in via `os.replace()` to prevent data corruption on crash.
 - Requests to `/save` are CSRF-protected via Flask-WTF.
 - Upload size is limited to 1 MB.
 
 ## Requirements
 
-- Python 3
-- Flask >= 3.1.0
-- Flask-WTF >= 1.2.0
+- Python 3.12+
+- [uv](https://docs.astral.sh/uv/) package manager

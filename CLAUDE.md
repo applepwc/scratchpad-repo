@@ -5,11 +5,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Running the Application
 
 ```bash
-pip install -r requirements.txt
-python app.py
+uv sync
+uv run flask run --debug
 ```
 
 The app runs on `http://127.0.0.1:5000/` in debug mode.
+
+> **Note:** A fixed `SECRET_KEY` environment variable is strongly recommended so CSRF tokens
+> survive restarts. Without it, a random key is generated at startup and all tokens are
+> invalidated when the process restarts.
+>
+> ```bash
+> export SECRET_KEY='your-long-random-string-here'
+> ```
 
 ## Architecture
 
